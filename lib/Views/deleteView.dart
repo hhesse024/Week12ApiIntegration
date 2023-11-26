@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morseth_week11/Repositories/UserClient.dart';
+import 'package:morseth_week11/Views/usersView.dart';
 
 UserClient userClient = UserClient();
 
@@ -22,7 +23,7 @@ Future<void> showDeleteConfirmation(BuildContext context, ID) async {
             onPressed: () {
               // Call the API to delete the user using the userId
               userClient.DeleteUserAsync(ID);
-              Navigator.of(context).pop(); // Close the dialog
+              Navigator.pop(context);
             },
           ),
         ],

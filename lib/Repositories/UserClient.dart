@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:morseth_week11/main.dart';
 import 'package:morseth_week11/Models/AuthResponse.dart';
+import 'package:morseth_week11/Views/usersView.dart';
 import '../Models/User.dart';
 import './DataService.dart';
 import '../Models/LoginStructure.dart';
@@ -9,6 +12,8 @@ const String BaseUrl = "https://cmsc2204-mobile-api.onrender.com/Auth";
 class UserClient {
   final _dio = Dio(BaseOptions(baseUrl: BaseUrl));
   DataService _dataService = DataService();
+
+  BuildContext? get context => null;
 
   Future<AuthResponse?> Login(LoginStructure user) async {
     try {
@@ -76,8 +81,7 @@ class UserClient {
               "Authorization": "Bearer $token"
             }));
         if (response.statusCode == 200) {
-          // User was successfully created
-          GetUsersAsync(); // Call GetUsersAsync here
+          //
         } else {
           // Handle the error, such as displaying an error message
           print("Error: ${response.data}");
@@ -91,11 +95,11 @@ class UserClient {
     }
   }
 
-  Future<void> DeleteUserAsync(user) async {
+  Future<void> DeleteUserAsync(ID) async {
     try {
       var token = await _dataService.TryGetItem("token");
       if (token != null) {
-        final data = {"_id": "$user"};
+        final data = {"id": "$ID"};
         var response = await _dio.post("/DeleteUserById",
             data: data,
             options: Options(headers: {
@@ -105,9 +109,15 @@ class UserClient {
             }));
 
         if (response.statusCode == 200) {
-          GetUsersAsync();
+          Navigator.push(
+            context!,
+            MaterialPageRoute(
+                builder: (context) => UsersView(
+                      inUsers: [],
+                    )),
+          );
         } else {
-          print("Unsuccessful");
+          print("Error: ${response.data}");
         }
       }
     } catch (error) {

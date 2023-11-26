@@ -68,9 +68,15 @@ class _UsersViewState extends State<UsersView> {
         }).toList(),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddUser()));
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddUser(
+                onAddUser: () {},
+              ),
+            ),
+          );
         },
         child: Icon(Icons.add),
       ),

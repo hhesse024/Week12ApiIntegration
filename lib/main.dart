@@ -96,6 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void addUserCallback() {
+    getUsers;
+  }
+
   void setApiVersion(String version) {
     setState(() {
       apiVersion = version;
